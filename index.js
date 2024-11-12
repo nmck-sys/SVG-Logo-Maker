@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require("fs");
 const { Square, Circle, Triangle } = require("./lib/shapes.js")
+import createLogo from './lib/logo.js';
 
 const questions = [
     {
@@ -25,11 +26,24 @@ const questions = [
         message: 'What color is the shape?',
         name: 'shape color',
     },
-]
+];
 
-inquirer
-.prompt(questions)
-.then((answers) => {
-    let shape;
-    
-})
+
+
+function enforceThree(response) {
+    return response.text.length > 3
+      ? (function () {
+          throw new Error('Please enter no more than 3 characters');
+        })() 
+      : (generateSVG(response), console.log(`${response.text}.svg created!`));
+  }
+
+  function init() {
+    inquirer
+    .prompt(questions)
+    .then((response) => {
+        enforceThree(response);
+    })
+}
+
+init();
