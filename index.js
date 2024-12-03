@@ -7,6 +7,11 @@ const questions = [
         type: 'input',
         message: 'What text? (3 char max)',
         name: 'text',
+        validate: (input) => {
+            if (input.length > 3) {
+                return 'Please enter no more than 3 characters';
+            } return true;
+        }
     },
     {
         type: 'list',
@@ -50,9 +55,9 @@ function enforceThree(response) {
     if (response.text.length > 3) {
         throw new Error('Please enter no more than 3 characters');
     } else {
-        const svgContent = generateSVG(response); // Call generateSVG with response
+        const svgContent = generateSVG(response);
         console.log(`${response.text}.svg generated`);
-        fs.writeFileSync(`${response.text}.svg`, svgContent); // Save the SVG to a file
+        fs.writeFileSync(`./examples/${response.text}.svg`, svgContent);
     }
 }
 
